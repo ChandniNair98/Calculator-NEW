@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <center><h1>CALCULATOR</h1></center>
+    <div class="body">
+    <div id="display"></div>
+    <div class="row">
+    <button onclick="calc('7')">7</button>
+    <button onclick="calc('8')">8</button>
+    <button onclick="calc('9')">9</button>
+    <button onclick="ops('*')">*</button>
+    </div>
+    
+    <div class="row">
+    <button onclick="calc('4')">4</button>
+    <button onclick="calc('5')">5</button>
+    <button onclick="calc('6')">6</button>
+    <button onclick="ops('+')">+</button>
+
+    </div>
+    
+    <div class="row">
+    <button onclick="calc('1')">1</button>
+    <button onclick="calc('2')">2</button>
+    <button onclick="calc('3')">3</button>
+    <button onclick="ops('-')">-</button>
+    </div>
+
+    <div class="row">
+    <button onclick="calc('0')">0</button>
+    <button onclick="ops('/')">/</button>
+    <button onclick="decimalAdd()">.</button>
+    <button onclick="clearDisplay()">AC</button>
+    </div>
+    
+    <div class="row">
+    <button onclick="ops('=')" id="equal">=</button>
+    <button onclick="backspace()">DEL</button>
+    <button onclick="percentage()">%</button>
+    </div>
+</div>
+
+    <br><br>
+    
+
+
+    <script>
+        first=""
+        second=""
+
+        function clearDisplay()
+        {
+            first=""
+            second=""
+            document.getElementById('display').textContent=""
+            setDisplay(first)
+        }
+        function setDisplay(text)
+        {
+            document.getElementById('display').innerHTML=text
+        }
+
+        function backspace()
+        {
+            second=document.getElementById('display').textContent.slice(0,-1)
+            setDisplay(second)
+
+
+        }
+
+
+        function decimalAdd()
+        {
+            if(!(second.includes('.')))
+                second=second.concat('.')
+            setDisplay(second)
+        }
+
+        function percentage()
+        {
+            second=(document.getElementById('display').textContent)/100
+            setDisplay(second)
+        }
+
+        function calc(num)
+        {
+            if(second=="")
+                second=num
+            else
+                second+=num
+
+                setDisplay(second)
+        }
+
+        function ops(f)
+        {
+
+            if(first!=="" && second!=="")
+            {
+                second=evaluate(first,second,currentop)
+                setDisplay(second)
+            }
+
+            currentop=f 
+
+            if(second!=="")
+            {
+                first=second
+            }
+            second=""
+        }
+
+        function evaluate(num1,num2,func)
+        {
+            let result
+            num1=Number(num1)
+            num2=Number(num2)
+            operation=func
+
+            switch(operation)
+            {
+                case '+': 
+                    result=num1+num2 
+                    break;
+                case '-': 
+                    result=num1-num2 
+                    break;
+                case '*': 
+                    result=num1*num2 
+                    break;
+                case '/': 
+                    if(num2===0)
+                        return 'INVALID'
+                    else{
+                        result=num1/num2
+                    }
+                    break;
+                case '=': 
+                    result=num2
+            }
+            result = Math.round(result * 100000) / 100000;
+            return result
+        }
+
+        
+
+
+
+    </script>
+    
+
+
+</body>
+</html>
